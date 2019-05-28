@@ -13,9 +13,11 @@ include_once('../database/config.php');
 include_once('../database/database.php');
 include_once('../frontend/menu.php');
 
-/*if($_SESSION['loggedin'] == true)
+if($_SESSION['loggedin'] == 0) {
     header("Location: ../frontend/index.php");
-*/
+    die();
+}
+
 ?>
 
 <head>
@@ -23,7 +25,6 @@ include_once('../frontend/menu.php');
     <link rel="stylesheet" type="text/css" href="../css/catalog.css">
     <title>Juicy</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../css/login.css">
 </head>
 <body>
     <header>

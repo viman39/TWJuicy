@@ -28,10 +28,11 @@ if(isset($_POST['email']) && !empty($_POST['email'])){
         $result = $stmt->get_result();
 
         if($result->num_rows > 0){
-            $_SESSION['loggedin'] = true;
+            $_SESSION['loggedin'] = 1;
             $_SESSION['username'] = $email;
-            $_SESSION['seller'] = false;
-            header("Location: ./catalogGenerator.php");
+            $_SESSION['seller'] = 0;
+            header("Location: ../backend/catalogGenerator.php");
+            die();
         } else{
             $stmt = $conn->prepare("SELECT * FROM vanzator WHERE email=? and parola=?;");
             $stmt->bind_param('ss', $email, $password);
@@ -39,14 +40,16 @@ if(isset($_POST['email']) && !empty($_POST['email'])){
             $result = $stmt->get_result();
 
             if($result->num_rows > 0){
-                $_SESSION['loggedin'] = true;
+                $_SESSION['loggedin'] = 1;
                 $_SESSION['username'] = $email;
-                $_SESSION['seller'] = true;
-                header("Location: ../frontend/addProduct.php");
+                $_SESSION['seller'] = 1;
+                header("Location: ../backend/manager.php");
+                die();
             }
         }
 
         header("Location: ../frontend/index.php");
+        die();
     } else{
         $errors['passd'] = 'Please insert your password!';
     }

@@ -23,9 +23,9 @@ include_once('../frontend/menu.php');
         </header>
 
         <div class="cart">
-            <div class="title">Your Cart</div>
+            <div class="row">Your Cart</div>
             <?php
-                if($_SESSION['loggedin'] == true) {
+                if($_SESSION['loggedin'] == 1) {
                     $conn = DB::getConnection(DB_HOST, DB_NAME, DB_USERNAME, DB_PASSWORD);
                     $user_name = $_SESSION['username'];
                     $stmt = $conn->prepare('SELECT id_client FROM clienti WHERE email=?;');
@@ -68,41 +68,40 @@ include_once('../frontend/menu.php');
                         $img_path = "\"" . "../backend/products/" . $row['path_poza'] . "\"";
                         $sour = $row['acidulat'] == 1 ? 'acidulat' : 'neacidulat';
                         ?>
-                        <html>
-                        <div class="item">
-                            <div class="buttons">
-                                <span class="delete-btn"></span>
-                                <span class="like-btn"></span>
-                            </div>
+                        <div class="column">
+                            <div class="item">
+                                <div class="buttons">
+                                    <a class="delete-btn" href="delete_from_cart"></a>
+                                    <span class="like-btn"></span>
+                                </div>
 
-                            <div class="image">
-                                <img src=<?php echo $img_path ?> alt=""/>
-                            </div>
+                                <div class="image">
+                                    <img src=<?php echo $img_path ?> alt=""/>
+                                </div>
 
-                            <div class="description">
-                                <span><?php echo $name ?></span>
-                                <span><?php echo $arome ?></span>
-                                <span><?php echo $sour ?></span>
-                            </div>
+                                <div class="description">
+                                    <span><?php echo $name ?></span>
+                                    <span><?php echo $arome ?></span>
+                                    <span><?php echo $sour ?></span>
+                                </div>
 
-                            <div>
-                                <input type="number" name="quantity" value=<?php echo $quantity ?>>
-                            </div>
+                                <div>
+                                    <input type="number" name="quantity" value=<?php echo $quantity ?>>
+                                </div>
 
-                            <div class="total-price"><?php echo $price ?> Lei</div>
-                        </html>
+                                <div class="total-price"><?php echo $price ?> Lei</div>
+                            </div>
+                        </div>
                         <?php
                     }
                 } else{
                     header("Location: ../frontend/index.php");
+                    die();
                 }
             ?>
-        </div>
         <div class="checkout-btn">
             <span><a href="../frontend/checkout.php">Check out</a></span>
         </div>
         </div>
-
-        <footer>Project by UAIC Students</footer>
     </body>
 </html>

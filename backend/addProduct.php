@@ -17,7 +17,7 @@ $errors = array(
     'quantity' => ''
 );
 
-//if($_SESSION['loggedin'] == true and $_SESSION['seller'] == true) {
+if($_SESSION['loggedin'] == 1 and $_SESSION['seller'] == 1) {
     if (isset($_POST['productName']) && !empty($_POST['productName'])) {
         if (isset($_POST['flavours']) && !empty($_POST['flavours'])) {
             if (isset($_POST['price']) && !empty($_POST['price'])) {
@@ -79,6 +79,7 @@ $errors = array(
                                     }
 
                                     header("Location: ../frontend/index.php");
+                                    die();
                                 } else {
                                     $errors['path'] = 'Your photo is too big!';
                                 }
@@ -102,7 +103,7 @@ $errors = array(
         }
     } else {
         $errors['name'] = 'Please select a name!';
-    }/*
+    }
 } else{
     $errors['name'] = 'You must be a seller to upload products!';
 }

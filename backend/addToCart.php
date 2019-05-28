@@ -13,16 +13,15 @@ $errors = array(
     'loggedin' => ''
 );
 
-//if($_SESSION['loggedin'] == true){
+if($_SESSION['loggedin'] == 1){
     if(isset($_GET['id_produs']) && !empty($_GET['id_produs'])){
         $id_produs = $_GET['id_produs'];
 
-        $email = 'email@gmail.com';
-        //$email = $_SESSION['username'];
+        $email = $_SESSION['username'];
 
         $conn = DB::getConnection(DB_HOST, DB_NAME, DB_USERNAME, DB_PASSWORD);
 
-        //if($_SESSION['seller'] == false){
+        if($_SESSION['seller'] == 0){
         $stmt = $conn->prepare("SELECT id_client FROM clienti WHERE email=?;");
         $stmt->bind_param('s', $email);
         $stmt->execute();
@@ -30,7 +29,7 @@ $errors = array(
         $row = $result->fetch_assoc();
         $id_client = $row['id_client'];
         $result->close();
-        /*} else{
+        } else{
             $stmt = $conn->prepare("SELECT * FROM vanzator WHERE email=?");
             $stmt->bind_param('s', $email);
             $stmt->execute();
@@ -38,7 +37,7 @@ $errors = array(
             $row = $result->fetch_assoc();
             $id_client = $row['id_vanzator'];
             $result->close();
-        }*/
+        }
 
         $stmt->close();
         $stmt = $conn->prepare("SELECT * FROM plateste_pentru WHERE id_client=?;");
@@ -95,9 +94,11 @@ $errors = array(
         $conn->query("UPDATE detine SET cantitate=cantitate-1 WHERE id_produs=$id_produs");
 
         header("Location: ../backend/catalogGenerator.php");
+        die();
     } else{
         header("Location: ../frontend/index.php");
-    }/*
+        die();
+    }
 } else{
     $errors['loggedin'] = 'You should login first!';
-} */
+}
