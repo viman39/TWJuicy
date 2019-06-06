@@ -6,8 +6,8 @@
  * Time: 12:12 PM
  */
 
-include_once ('../database/config.php');
-include_once ('../database/database.php');
+include_once('database\Database.php');
+session_start();
 
 $error = '';
 

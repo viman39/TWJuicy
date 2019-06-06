@@ -9,11 +9,11 @@
  * Time: 8:18 AM
  */
 
-include_once('../database/config.php');
-include_once('../database/database.php');
+include_once('database\Database.php');
 include_once('../frontend/menu.php');
+session_start();
 
-if($_SESSION['loggedin'] == 0) {
+if($_SESSION['login'] == false) {
     header("Location: ../frontend/index.php");
     die();
 }

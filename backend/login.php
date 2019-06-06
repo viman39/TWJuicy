@@ -6,8 +6,8 @@
  * Time: 9:12 AM
  */
 
-include_once ('../database/config.php');
-include_once ('../database/database.php');
+include_once('database\Database.php');
+session_start();
 
 $errors = array(
   'email' => '',
@@ -21,33 +21,28 @@ if(isset($_POST['email']) && !empty($_POST['email'])){
         $password = md5($password);
         $clienti = "clienti";
 
-        $conn = DB::getConnection(  DB_HOST, DB_NAME, DB_USERNAME, DB_PASSWORD);
-        $stmt = $conn->prepare("SELECT * FROM clienti WHERE email=? and parola=?;");
-        $stmt->bind_param('ss', $email, $password);
-        $stmt->execute();
-        $result = $stmt->get_result();
+        $reader = new Reader();
+        $result = $reader->clientExists($email, $password);
 
-        if($result->num_rows > 0){
-            $_SESSION['loggedin'] = 1;
+        if($result == true){
+            $_SESSION['login'] = true;
             $_SESSION['username'] = $email;
             $_SESSION['seller'] = 0;
             header("Location: ../backend/catalogGenerator.php");
             die();
         } else{
-            $stmt = $conn->prepare("SELECT * FROM vanzator WHERE email=? and parola=?;");
-            $stmt->bind_param('ss', $email, $password);
-            $stmt->execute();
-            $result = $stmt->get_result();
+            $result = $reader->sellerExists($email, $password);
 
-            if($result->num_rows > 0){
-                $_SESSION['loggedin'] = 1;
+            if($result == true){
+                $_SESSION['login'] = true;
                 $_SESSION['username'] = $email;
                 $_SESSION['seller'] = 1;
-                header("Location: ../backend/manager.php");
+                header("Location: ../backend/productsManager.php");
                 die();
             }
         }
 
+        session_destroy();
         header("Location: ../frontend/index.php");
         die();
     } else{
