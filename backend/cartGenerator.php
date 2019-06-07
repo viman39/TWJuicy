@@ -9,7 +9,6 @@
  */
 
 include_once('database\Database.php');
-session_start();
 
 include_once('../frontend/menu.php');
 ?>
@@ -26,42 +25,20 @@ include_once('../frontend/menu.php');
             <div class="row">Your Cart</div>
             <?php
                 if($_SESSION['login'] == true) {
-                    $conn = DB::getConnection(DB_HOST, DB_NAME, DB_USERNAME, DB_PASSWORD);
-                    $user_name = $_SESSION['username'];
-                    $stmt = $conn->prepare('SELECT id_client FROM clienti WHERE email=?;');
-                    $stmt->bind_param('s', $user_name);
-                    $stmt->execute();
-                    $result = $stmt->get_result();
-                    $row = $result->fetch_assoc();
-                    $id_client = $row['id_client'];
-                    $result->close();
-                    $stmt->close();
+                    $reader = new Reader();
+                    $email = $_SESSION['username'];
+                    $id_client = $reader->getClientId($email);
 
-                    $stmt = $conn->prepare("SELECT id_lista_cumparaturi FROM plateste_pentru WHERE id_client=?;");
-                    $stmt->bind_param('i', $id_client);
-                    $stmt->execute();
-                    $result = $stmt->get_result();
-                    $row = $result->fetch_assoc();
-                    $id_lista_cumparaturi = $row['id_lista_cumparaturi'];
-                    $result->close();
-                    $stmt->close();
+                    $id_lista_cumparaturi = $reader->getShoppingListId($id_client);
 
-                    $stmt = $conn->prepare("SELECT * FROM cantitate_cumparata WHERE id_lista_cumparaturi=?;");
-                    $stmt->bind_param('i', $id_lista_cumparaturi);
-                    $stmt->execute();
-                    $result_lista_cumparaturi = $stmt->get_result();
+                    $result_lista_cumparaturi = $reader->getShoppingList($id_lista_cumparaturi);
 
                     if($result_lista_cumparaturi->num_rows != 0 ){
                         while ($row = $result_lista_cumparaturi->fetch_assoc()) {
                             $id_produs = $row['id_produs'];
                             $quantity = "\"" . $row['cantitate'] . "\"";
 
-                            $stmt->close();
-                            $stmt = $conn->prepare("SELECT * FROM produse WHERE id_produs=?;");
-                            $stmt->bind_param('i', $id_produs);
-                            $stmt->execute();
-                            $result = $stmt->get_result();
-                            $row = $result->fetch_assoc();
+                            $row = $reader->getProduct($id_produs);
 
                             $name = $row['nume'];
                             $price = $row['pret'];
@@ -93,12 +70,12 @@ include_once('../frontend/menu.php');
                                     <div class="total-price"><?php echo $price ?> Lei</div>
                                 </div>
                             </div>
-
-                        <div class="checkout-btn">
-                            <span><a href="../frontend/checkout.php">Check out</a></span>
-                        </div>
                             <?php
-                        }
+                        } ?>
+                            <div class="checkout-btn">
+                                <span><a href="../frontend/checkout.php">Check out</a></span>
+                            </div>
+                        <?php
                     } else{
                         echo "YOUR CART IS EMPTY!";
                     }
@@ -110,3 +87,4 @@ include_once('../frontend/menu.php');
         </div>
     </body>
 </html>
+
