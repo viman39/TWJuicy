@@ -11,7 +11,6 @@
 
 include_once('database\Database.php');
 include_once('../frontend/menu.php');
-session_start();
 
 if($_SESSION['login'] == false) {
     header("Location: ../frontend/index.php");
@@ -33,8 +32,8 @@ if($_SESSION['login'] == false) {
     <div class="container">
         <div class="row">
             <?php
-                $conn = DB::getConnection(DB_HOST, DB_NAME, DB_USERNAME, DB_PASSWORD);
-                $result_produse = $conn->query("SELECT * FROM produse;");
+                $reader = new Reader();
+                $result_produse = $reader->getProducts();
 
                 while($row = $result_produse->fetch_assoc()){
                     $path = "\"" . "../backend/products/" . $row['path_poza'] . "\"";
@@ -44,13 +43,8 @@ if($_SESSION['login'] == false) {
                     $id_produs = $row['id_produs'];
                     $adauga_in_cos = "\"" . "../backend/addToCart.php?id_produs=$id_produs" . "\"";
 
-                    $stmt = $conn->prepare("SELECT * FROM detine WHERE id_produs=?;");
-                    $stmt->bind_param('i', $id_produs);
-                    $stmt->execute();
-                    $result = $stmt->get_result();
-                    $row = $result->fetch_assoc();
+                    $row = $reader->getOwnedQuantity($id_produs);
                     $quantity = $row['cantitate'];
-                    $result->close();
 
                     $sold_out = $quantity == 0 ? true : false;
                     ?>
@@ -74,6 +68,7 @@ if($_SESSION['login'] == false) {
                     </div>
             <?php
                 }
+                $reader->kill();
             ?>
         </div>
     </div>
