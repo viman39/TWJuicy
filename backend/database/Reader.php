@@ -44,4 +44,126 @@ class Reader{
             return false;
         }
     }
+
+    public function getClientId($email){
+        $stmt = self::$conn->prepare("SELECT id_client FROM clienti WHERE email = ?;");
+        $stmt->bind_param('s', $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        if($result->num_rows == 0){
+            $result->close();
+            return -1;
+        }
+        $row = $result->fetch_assoc();
+        $result->close();
+        return $row['id_client'];
+    }
+
+    public function getSellerId($email){
+        $stmt = self::$conn->prepare("SELECT id_vanzator FROM vanzator WHERE email = ?;");
+        $stmt->bind_param('s', $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        if($result->num_rows == 0){
+            $result->close();
+            return -1;
+        }
+        $row = $result->fetch_assoc();
+        $result->close();
+        return $row['id_vanzator'];
+    }
+
+    public function getProductId($id_seller, $product_name){
+        $stmt = self::$conn->prepare("SELECT id_produs FROM produse WHERE id_vanzator=? and nume=?;");
+        $stmt->bind_param('is', $id_seller, $product_name);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        $row = $result->fetch_assoc();
+        $result->close();
+        return $row['id_produs'];
+    }
+
+    public function getProduct($id_produs){
+        $stmt = self::$conn->prepare("SELECT * FROM produse WHERE id_produs=?;");
+        $stmt->bind_param('i', $id_produs);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        $row = $result->fetch_assoc();
+        $result->close();
+
+        return $row;
+    }
+
+    public function getProducts(){
+        $result_produse = self::$conn->query("SELECT * FROM produse;");
+
+        return $result_produse;
+    }
+
+    public function getShoppingListId($id_client){
+        $stmt = self::$conn->prepare("SELECT * FROM plateste_pentru WHERE id_client=? and finalizare=0;");
+        $stmt->bind_param('i', $id_client);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        if($result->num_rows == 0){
+            $result->close();
+            return -1;
+        }
+        $row = $result->fetch_assoc();
+        $result->close();
+        return $row['id_lista_cumparaturi'];
+    }
+
+    public function getPurchasedQuantity($id_lista_cumparaturi, $id_produs){
+        $stmt = self::$conn->prepare("SELECT * FROM cantitate_cumparata WHERE id_lista_cumparaturi=? and id_produs=?;");
+        $stmt->bind_param('ii', $id_lista_cumparaturi, $id_produs);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        if($result->num_rows == 0){
+            $result->close();
+            return -1;
+        }
+        $row = $result->fetch_assoc();
+        $result->close();
+        return $row['cantitate'];
+    }
+
+    public function getLastShoppingListId(){
+        $result = self::$conn->query("SELECT * FROM lista_cumparaturi ORDER BY id_lista_cumparaturi DESC;");
+        $row = $result->fetch_assoc();
+        $id_lista_cumparaturi = $row['id_lista_cumparaturi'];
+        $result->close();
+        return $id_lista_cumparaturi;
+    }
+
+    public function getShoppingList($id_lista_cumparaturi){
+        $stmt = self::$conn->prepare("SELECT * FROM cantitate_cumparata WHERE id_lista_cumparaturi=?;");
+        $stmt->bind_param('i', $id_lista_cumparaturi);
+        $stmt->execute();
+        $result_lista_cumparaturi = $stmt->get_result();
+        $stmt->close();
+
+        return $result_lista_cumparaturi;
+    }
+
+    public function getOwnedQuantity($id_produs){
+        $stmt = self::$conn->prepare("SELECT * FROM detine WHERE id_produs=?;");
+        $stmt->bind_param('i', $id_produs);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        $result->close();
+
+        return $row;
+    }
+
+    public function kill(){
+        self::$conn->close();
+    }
 }
