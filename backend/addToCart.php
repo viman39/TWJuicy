@@ -13,86 +13,43 @@ $errors = array(
     'loggedin' => ''
 );
 
-if($_SESSION['loggedin'] == 1){
+if($_SESSION['login'] == true){
     if(isset($_GET['id_produs']) && !empty($_GET['id_produs'])){
         $id_produs = $_GET['id_produs'];
 
         $email = $_SESSION['username'];
 
-        $conn = DB::getConnection(DB_HOST, DB_NAME, DB_USERNAME, DB_PASSWORD);
+        $reader = new Reader();
+        $creator = new Creator();
 
-        if($_SESSION['seller'] == 0){
-        $stmt = $conn->prepare("SELECT id_client FROM clienti WHERE email=?;");
-        $stmt->bind_param('s', $email);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $row = $result->fetch_assoc();
-        $id_client = $row['id_client'];
-        $result->close();
+        if($_SESSION['seller'] == false){
+        $id_client = $reader->getClientId($email);
         } else{
-            $stmt = $conn->prepare("SELECT * FROM vanzator WHERE email=?");
-            $stmt->bind_param('s', $email);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            $row = $result->fetch_assoc();
-            $id_client = $row['id_vanzator'];
-            $result->close();
+            $id_client = $reader->getSellerId($email);
         }
 
-        $stmt->close();
-        $stmt = $conn->prepare("SELECT * FROM plateste_pentru WHERE id_client=?;");
-        $stmt->bind_param('i', $id_client);
-        $stmt->execute();
-        $stmt->store_result();
-        if($stmt->num_rows == 0) {
-            $stmt->close();
-            $id_lista_cumparaturi = $conn->insert_id;
-            $stmt = $conn->prepare("INSERT INTO lista_cumparaturi(id_lista_cumparaturi) VALUES(?);");
-            $stmt->bind_param('i', $id_lista_cumparaturi);
-            $stmt->execute();
-            $stmt->close();
+        $id_lista_cumparaturi = $reader->getShoppingListId($id_client);
 
-            $result = $conn->query("SELECT * FROM lista_cumparaturi ORDER BY id_lista_cumparaturi DESC;");
-            $row = $result->fetch_assoc();
-            $id_lista_cumparaturi = $row['id_lista_cumparaturi'];
-            $result->close();
-
-            $stmt = $conn->prepare("INSERT INTO plateste_pentru(id_client, id_lista_cumparaturi) VALUES (?,?)");
-            $stmt->bind_param('ii', $id_client, $id_lista_cumparaturi);
-            $stmt->execute();
-
-        } else{
-            $stmt->close();
-            $stmt = $conn->prepare("SELECT * FROM plateste_pentru WHERE id_client=?;");
-            $stmt->bind_param('i', $id_client);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            $row = $result->fetch_assoc();
-            $id_lista_cumparaturi = $row['id_lista_cumparaturi'];
-            $result->close();
+        if($id_lista_cumparaturi == -1) {
+            $id_lista_cumparaturi = $creator->insertShoppingList($id_client);
         }
 
-        $stmt->close();
-        $stmt = $conn->prepare("SELECT * FROM cantitate_cumparata WHERE id_lista_cumparaturi=? and id_produs=?;");
-        $stmt->bind_param('ii', $id_lista_cumparaturi, $id_produs);
-        $stmt->execute();
-        $stmt->store_result();
-        if($stmt->num_rows == 0) {
-            $stmt->close();
-            $stmt = $conn->prepare("INSERT INTO cantitate_cumparata(id_lista_cumparaturi, id_produs, cantitate) VALUES(?, ?, ?);");
-            $cantitate = 1;
-            $stmt->bind_param('iii', $id_lista_cumparaturi, $id_produs, $cantitate);
-            $stmt->execute();
-        } else{
-            $stmt->close();
-            $stmt = $conn->prepare("UPDATE cantitate_cumparata SET cantitate=cantitate+1 WHERE id_lista_cumparaturi=? and id_produs=?;");
-            $stmt->bind_param('ii', $id_lista_cumparaturi, $id_produs);
-            $stmt->execute();
+        if($id_lista_cumparaturi == -1){
+            echo "A aparut o problema!";
         }
 
-        $stmt->close();
-        $conn->query("UPDATE detine SET cantitate=cantitate-1 WHERE id_produs=$id_produs");
+        $cantitate = $reader->getPurchasedQuantity($id_lista_cumparaturi, $id_produs);
 
+        if($cantitate == -1) {
+            $check = $creator->insertNewItem($id_lista_cumparaturi, $id_produs);
+        } else{
+            $updater = new Updater();
+            $check = $updater->incrementPurchasedQuantity($id_lista_cumparaturi, $id_produs);
+            $updater->kill();
+        }
+
+        $reader->kill();
+        $creator->kill();
         header("Location: ../backend/catalogGenerator.php");
         die();
     } else{
