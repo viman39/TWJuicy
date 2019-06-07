@@ -27,7 +27,8 @@ if(isset($_POST['email']) && !empty($_POST['email'])){
         if($result == true){
             $_SESSION['login'] = true;
             $_SESSION['username'] = $email;
-            $_SESSION['seller'] = 0;
+            $_SESSION['seller'] = false;
+            $reader->kill();
             header("Location: ../backend/catalogGenerator.php");
             die();
         } else{
@@ -36,12 +37,14 @@ if(isset($_POST['email']) && !empty($_POST['email'])){
             if($result == true){
                 $_SESSION['login'] = true;
                 $_SESSION['username'] = $email;
-                $_SESSION['seller'] = 1;
+                $_SESSION['seller'] = true;
+                $reader->kill();
                 header("Location: ../backend/productsManager.php");
                 die();
             }
         }
-
+        
+        $reader->kill();
         session_destroy();
         header("Location: ../frontend/index.php");
         die();
