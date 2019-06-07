@@ -17,7 +17,7 @@ $errors = array(
     'quantity' => ''
 );
 
-if($_SESSION['loggedin'] == 1 and $_SESSION['seller'] == 1) {
+if($_SESSION['login'] == true and $_SESSION['seller'] == true) {
     if (isset($_POST['productName']) && !empty($_POST['productName'])) {
         if (isset($_POST['flavours']) && !empty($_POST['flavours'])) {
             if (isset($_POST['price']) && !empty($_POST['price'])) {
@@ -46,38 +46,27 @@ if($_SESSION['loggedin'] == 1 and $_SESSION['seller'] == 1) {
 
                                     move_uploaded_file($file['tmp_name'], $fileDestination);
 
-                                    $conn = DB::getConnection(DB_HOST, DB_NAME, DB_USERNAME, DB_PASSWORD);
-                                    $stmt = $conn->prepare("SELECT id_vanzator FROM vanzator WHERE email = ?;");
-                                    $stmt->bind_param('s', $email);
-                                    $stmt->execute();
-                                    $result = $stmt->get_result();
-                                    $row = $result->fetch_assoc();
-                                    $id_seller = $row['id_vanzator'];
+                                    $reader = new Reader();
+                                    $id_seller = $reader->getSellerId($email);
 
-                                    $stmt = $conn->prepare("INSERT INTO produse(id_vanzator, nume, pret, acidulat, arome, path_poza) VALUES(?, ?, ?, ?, ?, ?);");
+                                    $creator = new Creator();
                                     $sour = isset($_POST['sour']) ? 1 : 0;
-                                    $stmt->bind_param('isiiss', $id_seller, $productName, $price, $sour, $flavours, $newFileName);
-                                    $check = $stmt->execute();
+                                    $check = $creator->insertProduct($id_seller, $productName, $price, $sour, $flavours, $newFileName);
 
                                     if (!$check) {
                                         echo 'Database error!';
                                     }
 
-                                    $stmt = $conn->prepare("SELECT id_produs FROM produse WHERE id_vanzator=? and nume=?;");
-                                    $stmt->bind_param('is', $id_seller, $productName);
-                                    $stmt->execute();
-                                    $result = $stmt->get_result();
-                                    $row = $result->fetch_assoc();
-                                    $id_product = $row['id_produs'];
+                                    $id_product = $reader->getProductId($id_seller, $productName);
 
-                                    $stmt = $conn->prepare("INSERT INTO detine(id_vanzator, id_produs, cantitate) VALUES(?, ?, ?);");
-                                    $stmt->bind_param('iii', $id_seller, $id_product, $quantity);
-                                    $check = $stmt->execute();
+                                    $check = $creator->insertDetine($id_seller, $id_product, $quantity);
 
                                     if (!$check) {
                                         echo 'Database error!';
                                     }
 
+                                    $creator->kill();
+                                    $reader->kill();
                                     header("Location: ../frontend/index.php");
                                     die();
                                 } else {
@@ -105,5 +94,5 @@ if($_SESSION['loggedin'] == 1 and $_SESSION['seller'] == 1) {
         $errors['name'] = 'Please select a name!';
     }
 } else{
-    $errors['name'] = 'You must be a seller to upload products!';
+    header("Location: ../frontend/index.php");
 }
