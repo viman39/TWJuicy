@@ -43,25 +43,25 @@ if(isset($_POST['emailAddress']) and !empty($_POST['emailAddress'])){
                                 if(strlen($password) > 5){
                                     $password = md5($password);
 
-                                    $conn = DB::getConnection(DB_HOST, DB_NAME, DB_USERNAME, DB_PASSWORD);
-                                    $stmt = $conn->prepare("SELECT * FROM clienti WHERE email=?;");
-                                    $stmt->bind_param('sss', $email, $name, $password);
-                                    $stmt->execute();
-                                    $result = $stmt->get_result();
-                                    if($result->num_rows == 0){
-                                        $id = $conn->insert_id;
-                                        $stmt = $conn->prepare("INSERT INTO clienti(id_client, adresa, email, nume, prenume, parola) VALUES(?, ?, ?, ?, ?, ?);");
-                                        $stmt->bind_param('isssss', $id, $address, $email, $name, $surname, $password);
-                                        $check = $stmt->execute();
+                                    $reader = new Reader();
+                                    $id_client = $reader->getClientId($email);
 
-                                        if(! $check){
+                                    if($id_client == -1){
+                                        $creator = new Creator();
+
+                                        $check = $creator->insertNewClient($address, $email, $name, $surname, $password);
+
+                                        if(!$check){
                                             echo 'Database error!';
                                         }
+
+                                        header("Location: ../frontend/index.php");
+                                        die();
                                     } else{
                                         $errors['email'] = 'Email already in use';
                                     }
 
-                                    $stmt->close();
+                                    $reader->kill();
                                 } else{
                                     $errors['password'] = 'Your password should be at least 6 characters long!';
                                 }
