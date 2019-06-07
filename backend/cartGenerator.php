@@ -79,6 +79,7 @@ include_once('../frontend/menu.php');
                     } else{
                         echo "YOUR CART IS EMPTY!";
                     }
+                    $reader->kill();
                 } else{
                     header("Location: ../frontend/index.php");
                     die();
