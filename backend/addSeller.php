@@ -16,18 +16,13 @@ if(isset($_POST['emailSeller']) && !empty(['emailSeller'])){
     $cod = rand(100000, 999999);
     $password = md5($cod);
 
-    $conn = DB::getConnection(DB_HOST, DB_NAME, DB_USERNAME, DB_PASSWORD);
-    $stmt = $conn->prepare("SELECT * FROM vanzator WHERE email=?;");
-    $stmt->bind_param('s', $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    $reader = new Reader();
+    $check = $reader->getSellerId($email);
 
-    if($result->num_rows == 0){
-        $stmt = $conn->prepare("INSERT INTO vanzator(id_vanzator, email, parola) VALUES(?, ?, ?)");
-        $id_vanzator = $conn->insert_id;
-        $stmt->bind_param('iss', $id_vanzator, $email, $cod);
-        $check = $stmt->execute();
-
+    if($check == -1){
+        $creator = new Creator();
+        $check = $creator->insertVanzator($email, $cod);
+        
         if($check){
             $from = "juicyprojectb2@gmail.com";
             $subject = "Password";
@@ -37,15 +32,15 @@ if(isset($_POST['emailSeller']) && !empty(['emailSeller'])){
         } else{
             echo 'Database error!';
         }
-
+        
+        $creator->kill();
+        $reader->kill();
         header('location:../frontend/index.php');
         die();
 
     } else {
         $error = 'This email is already in use!';
     }
-
-    $stmt->close();
 } else{
     $error = 'Please insert your email first!';
 }
