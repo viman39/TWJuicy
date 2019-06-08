@@ -19,7 +19,8 @@ CREATE TABLE clienti(
 CREATE TABLE plateste_pentru(
     id_client INT NOT NULL,
     id_lista_cumparaturi INT NOT NULL,
-    finalizare tinyint(1)
+    finalizare tinyint(1),
+    vanzator tinyint(1)
 );
 
 CREATE TABLE lista_cumparaturi(
