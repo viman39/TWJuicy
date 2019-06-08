@@ -104,9 +104,19 @@ class Reader{
         return $result_produse;
     }
 
-    public function getShoppingListId($id_client){
-        $stmt = self::$conn->prepare("SELECT * FROM plateste_pentru WHERE id_client=? and finalizare=0;");
-        $stmt->bind_param('i', $id_client);
+    public function getProductsFrom($id_vanzator){
+        $stmt = self::$conn->prepare("SELECT * FROM produse WHERE id_vanzator=?;");
+        $stmt->bind_param('i', $id_vanzator);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+
+        return $result;
+    }
+
+    public function getShoppingListId($id_client, $vanzator){
+        $stmt = self::$conn->prepare("SELECT * FROM plateste_pentru WHERE id_client=? and finalizare=0 and vanzator=?;");
+        $stmt->bind_param('ii', $id_client, $vanzator);
         $stmt->execute();
         $result = $stmt->get_result();
         $stmt->close();
@@ -160,7 +170,7 @@ class Reader{
         $row = $result->fetch_assoc();
         $result->close();
 
-        return $row;
+        return $row['cantitate'];
     }
 
     public function kill(){

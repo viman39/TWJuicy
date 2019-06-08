@@ -41,15 +41,13 @@ class Creator{
         return $check;
     }
 
-    public function insertShoppingList($id_client){
+    public function insertShoppingList($id_client, $vanzator){
         $check = self::insertShoppingListId();
 
         $reader = new Reader();
         $id_lista_cumparaturi = $reader->getLastShoppingListId();
 
-        $check = self::insertShoppingListToClient($id_client, $id_lista_cumparaturi);
-
-        $reader->kill();
+        $check = self::insertShoppingListToClient($id_client, $id_lista_cumparaturi, $vanzator);
 
         return $check ? $id_lista_cumparaturi : -1;
     }
@@ -64,10 +62,10 @@ class Creator{
         return $check;
     }
 
-    public function insertShoppingListToClient($id_client, $id_lista_cumparaturi){
-        $stmt = self::$conn->prepare("INSERT INTO plateste_pentru(id_client, id_lista_cumparaturi, finalizare) VALUES (?,?,?);");
+    public function insertShoppingListToClient($id_client, $id_lista_cumparaturi, $vanzator){
+        $stmt = self::$conn->prepare("INSERT INTO plateste_pentru(id_client, id_lista_cumparaturi, finalizare, vanzator) VALUES (?,?,?,?);");
         $finalizare = 0;
-        $stmt->bind_param('iii', $id_client, $id_lista_cumparaturi, $finalizare);
+        $stmt->bind_param('iiii', $id_client, $id_lista_cumparaturi, $finalizare, $vanzator);
         $check = $stmt->execute();
         $stmt->close();
 
