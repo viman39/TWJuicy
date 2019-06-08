@@ -27,7 +27,7 @@ while($row = $lista_produse->fetch_assoc()){
     $id_produs = $row['id_produs'];
     $quantity = $reader->getOwnedQuantity($id_produs);
 
-    $productsManager->buildItem($nume, $pret, $acidulat, $arome, $quantity);
+    $productsManager->buildItem($nume, $pret, $acidulat, $arome, $quantity, $id_produs);
 }
 
 $productsManager->buildTail();

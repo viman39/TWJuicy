@@ -43,7 +43,7 @@ if(isset($_POST['email']) && !empty($_POST['email'])){
                 die();
             }
         }
-        
+
         $reader->kill();
         session_destroy();
         header("Location: ../frontend/index.php");

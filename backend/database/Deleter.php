@@ -13,4 +13,33 @@ class Deleter{
         self::$conn = Database::getConnection();
     }
 
+    public function deleteProduct($id_produs){
+        $stmt = self::$conn->prepare("DELETE FROM produse WHERE id_produs=?;");
+        $stmt->bind_param('i', $id_produs);
+        $check = $stmt->execute();
+        $stmt->close();
+
+        self::deleteProductFromCantitate_cumparata($id_produs, -1);
+
+        return $check;
+    }
+
+    public function deleteProductFromCantitate_cumparata($id_produs, $id_lista_cumparaturi){
+        if($id_lista_cumparaturi == -1){
+            $stmt = self::$conn->prepare("DELETE FROM cantitate_cumparata WHERE id_produs=?");
+            $stmt->bind_param('i', $id_produs);
+        } else{
+            $stmt = self::$conn->prepare("DELETE FROM cantitate_cumparata WHERE id_produs=? and id_lista_cumparaturi=?;");
+            $stmt->bind_param('ii', $id_produs, $id_lista_cumparaturi);
+        }
+
+        $check = $stmt->execute();
+        $stmt->close();
+
+        return $check;
+    }
+
+    public function kill(){
+        self::$conn->close();
+    }
 }

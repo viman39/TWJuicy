@@ -50,7 +50,7 @@ include_once('../frontend/menu.php');
                             <div class="column">
                                 <div class="item">
                                     <div class="buttons">
-                                        <a class="delete-btn" href="delete_from_cart"></a>
+                                        <a class="delete-btn" href="deleteFromCart.php?id_produs=<?php echo $id_produs?>&id_lista_cumparaturi=<?php echo $id_lista_cumparaturi?>"></a>
                                         <span class="like-btn"></span>
                                     </div>
 
