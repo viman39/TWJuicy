@@ -28,8 +28,9 @@ include_once('../frontend/menu.php');
                     $reader = new Reader();
                     $email = $_SESSION['username'];
                     $id_client = $reader->getClientId($email);
+                    $vanzator = $_SESSION['seller'] == true ? 1 : 0;
 
-                    $id_lista_cumparaturi = $reader->getShoppingListId($id_client);
+                    $id_lista_cumparaturi = $reader->getShoppingListId($id_client, $vanzator);
 
                     $result_lista_cumparaturi = $reader->getShoppingList($id_lista_cumparaturi);
 

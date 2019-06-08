@@ -28,10 +28,12 @@ if($_SESSION['login'] == true){
             $id_client = $reader->getSellerId($email);
         }
 
-        $id_lista_cumparaturi = $reader->getShoppingListId($id_client);
+        $vanzator = $_SESSION['seller'] == true ? 1 : 0;
+
+        $id_lista_cumparaturi = $reader->getShoppingListId($id_client, $vanzator);
 
         if($id_lista_cumparaturi == -1) {
-            $id_lista_cumparaturi = $creator->insertShoppingList($id_client);
+            $id_lista_cumparaturi = $creator->insertShoppingList($id_client, $vanzator);
         }
 
         if($id_lista_cumparaturi == -1){

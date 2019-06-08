@@ -43,8 +43,7 @@ if($_SESSION['login'] == false) {
                     $id_produs = $row['id_produs'];
                     $adauga_in_cos = "\"" . "../backend/addToCart.php?id_produs=$id_produs" . "\"";
 
-                    $row = $reader->getOwnedQuantity($id_produs);
-                    $quantity = $row['cantitate'];
+                    $quantity = $reader->getOwnedQuantity($id_produs);
 
                     $sold_out = $quantity == 0 ? true : false;
                     ?>
