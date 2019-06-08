@@ -6,8 +6,13 @@
  * Time: 6:19 PM
  */
 
-$id_product = $_GET['id_produs'];
-$quantity = $_POST['quantity'];
+include_once('database/Database.php');
 
-var_dump($id_product);
-var_dump($quantity);
+$id_product = $_GET['id_produs'];
+$quantity = $_POST['newQty'];
+
+$updater = new Updater();
+$updater->updateProductQuantity($id_product, $quantity);
+
+header("Location: ../backend/productsManager.php");
+die();
