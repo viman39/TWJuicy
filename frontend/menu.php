@@ -13,11 +13,11 @@
                                                                                     echo "Your Items";
                                                                                     else echo "Shopping History"; ?></a></li>
         <?php }?>
-        <li><a href="../frontend/contact.html">Contact</a></li>
+        <li><a href="../frontend/contact.php">Contact</a></li>
         <?php if(!isset($_SESSION['login']) or $_SESSION['login'] == false){ ?>
         <li><a href="#login" onclick="document.getElementById('id01').style.display='block'">Login</a></li>
         <?php }else {?>
-        <li><a href="../backend/logout.php">Logout</a></li>
+        <li><a href="../backend/logout.php">Logout <?php echo $_SESSION['username'];?></a></li>
         <?php } ?>
         <li><a href="../backend/cartGenerator.php"><img src="../img/cart_transparent.png" alt="Shopping Cart"></a></li>
     </ul>

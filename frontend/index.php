@@ -19,16 +19,6 @@
     <p id="p1">Using our web service you can preview drinks that are available for purchase.</p>
     <p id="p2">We also provide information regarding the respective drinks, such as price, the energy value, ingredients. </p>
 
-    <form action="../backend/addSeller.php" method="POST">
-        <div>
-            <h1>Become a seller! </h1>
-            <input type="text" id="addSeller" placeholder="your email here" name="emailSeller">
-        </div>
-        <div>
-            <button type="submit">Submit</button>
-        </div>
-    </form>
-    <a href = "addProduct.php" methods="POST">add product</a>
     <footer>Project by UAIC Students</footer>
 
 </body>
