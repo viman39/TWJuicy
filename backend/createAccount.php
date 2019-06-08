@@ -47,16 +47,21 @@ if(isset($_POST['emailAddress']) and !empty($_POST['emailAddress'])){
                                     $id_client = $reader->getClientId($email);
 
                                     if($id_client == -1){
-                                        $creator = new Creator();
+                                        $check = $reader->getSellerId($email);
+                                        if($check == -1) {
+                                            $creator = new Creator();
 
-                                        $check = $creator->insertNewClient($address, $email, $name, $surname, $password);
+                                            $check = $creator->insertNewClient($address, $email, $name, $surname, $password);
 
-                                        if(!$check){
-                                            echo 'Database error!';
+                                            if (!$check) {
+                                                echo 'Database error!';
+                                            }
+
+                                            header("Location: ../frontend/index.php");
+                                            die();
+                                        } else{
+                                            $errors['email'] = 'Email already in use';
                                         }
-
-                                        header("Location: ../frontend/index.php");
-                                        die();
                                     } else{
                                         $errors['email'] = 'Email already in use';
                                     }
