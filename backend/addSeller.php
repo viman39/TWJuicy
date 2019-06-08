@@ -20,24 +20,28 @@ if(isset($_POST['emailSeller']) && !empty(['emailSeller'])){
     $check = $reader->getSellerId($email);
 
     if($check == -1){
-        $creator = new Creator();
-        $check = $creator->insertVanzator($email, $cod);
-        
-        if($check){
-            $from = "juicyprojectb2@gmail.com";
-            $subject = "Password";
-            $message = "Buna ziua! \n Parola dumneavoastra este: " . $cod;
-            $headers = "From: " . $from;
-            mail($email, $subject, $message, $headers);
-        } else{
-            echo 'Database error!';
-        }
-        
-        $creator->kill();
-        $reader->kill();
-        header('location:../frontend/index.php');
-        die();
+        $check = $reader->getClientId($email);
+        if($check == -1) {
+            $creator = new Creator();
+            $check = $creator->insertVanzator($email, $cod);
 
+            if ($check) {
+                $from = "juicyprojectb2@gmail.com";
+                $subject = "Password";
+                $message = "Buna ziua! \n Parola dumneavoastra este: " . $cod;
+                $headers = "From: " . $from;
+                mail($email, $subject, $message, $headers);
+            } else {
+                echo 'Database error!';
+            }
+
+            $creator->kill();
+            $reader->kill();
+            header('location:../frontend/index.php');
+            die();
+        } else {
+            $error = 'This email is already in use!';
+        }
     } else {
         $error = 'This email is already in use!';
     }
