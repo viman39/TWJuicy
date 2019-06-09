@@ -42,8 +42,7 @@ CREATE TABLE produse(
     arome VARCHAR(255),
     path_poze VARCHAR(512)
     nou tinyint(1) NOT NULL DEFAULT 1,
-    data_adaugarii DATE DEFAULT CURRENT_TIMESTAMP,
-    valabil tinyint(1) NOT NULL DEFAULT 1    
+    data_adaugarii DATE DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE detine(
