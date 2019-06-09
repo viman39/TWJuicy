@@ -18,7 +18,9 @@ CREATE TABLE clienti(
 
 CREATE TABLE plateste_pentru(
     id_client INT NOT NULL,
-    id_lista_cumparaturi INT NOT NULL
+    id_lista_cumparaturi INT NOT NULL,
+    finalizare INT NOT NULL DEFAULT 0,
+    vanzator INT NOT NULL
 );
 
 CREATE TABLE lista_cumparaturi(
@@ -35,8 +37,13 @@ CREATE TABLE produse(
     id_produs INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     id_vanzator INT NOT NULL,
     nume VARCHAR(50),
-    categorie VARCHAR(50),
-    pret INT NOT NULL
+    pret INT NOT NULL.
+    acidulat tinyint(1) NOT NULL
+    arome VARCHAR(255),
+    path_poze VARCHAR(512)
+    nou tinyint(1) NOT NULL DEFAULT 1,
+    data_adaugarii DATE DEFAULT CURRENT_TIMESTAMP,
+    valabil tinyint(1) NOT NULL DEFAULT 1    
 );
 
 CREATE TABLE detine(
