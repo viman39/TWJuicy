@@ -7,6 +7,7 @@
  */
 
 include_once('database\Database.php');
+include_once('../backend/mail_config/Email.php');
 session_start();
 
 $error = '';
@@ -23,14 +24,11 @@ if(isset($_POST['emailSeller']) && !empty(['emailSeller'])){
         $check = $reader->getClientId($email);
         if($check == -1) {
             $creator = new Creator();
-            $check = $creator->insertVanzator($email, $cod);
+            $check = $creator->insertVanzator($email, $password);
 
             if ($check) {
-                $from = "juicyprojectb2@gmail.com";
-                $subject = "Password";
-                $message = "Buna ziua! \n Parola dumneavoastra este: " . $cod;
-                $headers = "From: " . $from;
-                mail($email, $subject, $message, $headers);
+                $emailer = new Email();
+                $emailer->addNewSeller($email, $cod);
             } else {
                 echo 'Database error!';
             }

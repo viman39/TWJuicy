@@ -8,9 +8,9 @@
 
 include_once('database\Database.php');
 include_once('..\frontend\menu.php');
-include_once('..\frontend\builders\productManagerBuilder.php');
+include_once('..\frontend\builders\ProductManagerBuilder.php');
 
-$productsManager = new productManagerBuilder();
+$productsManager = new ProductManagerBuilder();
 
 $reader = new Reader();
 

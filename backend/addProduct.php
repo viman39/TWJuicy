@@ -67,7 +67,7 @@ if($_SESSION['login'] == true and $_SESSION['seller'] == true) {
 
                                     $creator->kill();
                                     $reader->kill();
-                                    header("Location: ../frontend/index.php");
+                                    header("Location: ../backend/productsManager.php");
                                     die();
                                 } else {
                                     $errors['path'] = 'Your photo is too big!';

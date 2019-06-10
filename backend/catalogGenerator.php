@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-<html lang="ro">
 
 <?php
 /**
@@ -11,66 +9,29 @@
 
 include_once('database\Database.php');
 include_once('../frontend/menu.php');
-
+include_once('../frontend/builders/CatalogBuilder.php');
 if($_SESSION['login'] == false) {
     header("Location: ../frontend/index.php");
     die();
 }
 
-?>
+$reader = new Reader();
+$catalogBuilder = new CatalogBuilder();
 
-<head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="../css/catalog.css">
-    <title>Juicy</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body>
-    <header>
-        <h1>Catalog sucuri</h1>
-    </header>
-    <div class="container">
-        <div class="row">
-            <?php
-                $reader = new Reader();
-                $result_produse = $reader->getProducts();
+$result_produse = $reader->getProducts();
 
-                while($row = $result_produse->fetch_assoc()){
-                    $path = "\"" . "../backend/products/" . $row['path_poza'] . "\"";
-                    $nume = $row['nume'];
-                    $pret = $row['pret'];
-                    $arome = $row['arome'];
-                    $id_produs = $row['id_produs'];
-                    $adauga_in_cos = "\"" . "../backend/addToCart.php?id_produs=$id_produs" . "\"";
+    while($row = $result_produse->fetch_assoc()){
+        $path = "\"" . "../backend/products/" . $row['path_poza'] . "\"";
+        $nume = $row['nume'];
+        $pret = $row['pret'];
+        $arome = $row['arome'];
+        $id_produs = $row['id_produs'];
+        $adauga_in_cos = "\"" . "../backend/addToCart.php?id_produs=$id_produs" . "\"";
+        $quantity = $reader->getOwnedQuantity($id_produs);
+        $sold_out = $quantity == 0 ? true : false;
 
-                    $quantity = $reader->getOwnedQuantity($id_produs);
+        $catalogBuilder->buildItem($path, $nume, $pret, $arome, $adauga_in_cos, $sold_out);
+    }
 
-                    $sold_out = $quantity == 0 ? true : false;
-                    ?>
-                    <div class="column">
-                        <div class="card">
-                            <a class="button">
-                                <img src=<?php echo $path?> alt=<?php echo $nume?> style="width:100%">
-                            </a>
-                            <h2> <?php echo $nume ?> </h2>
-                            <?php if($sold_out == false) {
-                                ?> <p class="Pret"><?php echo $pret ?> LEI </p> <?php
-                            } else{
-                                ?> <p class="soldOut">SOLD OUT</p> <?php
-                            }
-                            ?>
-                            <p><?php echo $arome ?></p>
-                            <?php if($sold_out == false) {
-                                ?> <p><a class="btn btn-primary" href=<?php echo $adauga_in_cos?>>Adauga in cos</a></p> <?php
-                            } ?>
-                        </div>
-                    </div>
-            <?php
-                }
-                $reader->kill();
-            ?>
-        </div>
-    </div>
-</body>
-</html>
-
+$catalogBuilder->buildTail();
+$reader->kill();

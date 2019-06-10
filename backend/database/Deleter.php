@@ -20,6 +20,7 @@ class Deleter{
         $stmt->close();
 
         self::deleteProductFromCantitate_cumparata($id_produs, -1);
+        self::deleteProductFromDetine($id_produs);
 
         return $check;
     }
@@ -41,5 +42,14 @@ class Deleter{
 
     public function kill(){
         self::$conn->close();
+    }
+
+    public function deleteProductFromDetine($id_produs){
+        $stmt = self::$conn->prepare("DELETE FROM detine WHERE id_produs=?;");
+        $stmt->bind_param('i', $id_produs);
+        $check = $stmt->execute();
+        $stmt->close();
+
+        return $check;
     }
 }

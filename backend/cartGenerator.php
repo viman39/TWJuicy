@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-<html lang="ro">
 <?php
 /**
  * Created by PhpStorm.
@@ -9,84 +7,43 @@
  */
 
 include_once('database\Database.php');
-
+include_once('..\frontend\builders\CartBuilder.php');
 include_once('../frontend/menu.php');
-?>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width">
-    </head>
-    <body>
-        <header>
-            <h1 class="main_title">Juicy</h1>
-        </header>
 
-        <div class="cart">
-            <div class="row">Your Cart</div>
-            <?php
-                if($_SESSION['login'] == true) {
-                    $reader = new Reader();
-                    $email = $_SESSION['username'];
-                    $id_client = $reader->getClientId($email);
-                    $vanzator = $_SESSION['seller'] == true ? 1 : 0;
+if($_SESSION['login'] == true) {
+    $cartBuilder = new CartBuilder();
 
-                    $id_lista_cumparaturi = $reader->getShoppingListId($id_client, $vanzator);
+    $reader = new Reader();
+    $email = $_SESSION['username'];
+    $id_client = $reader->getUserId($email);
+    $vanzator = $_SESSION['seller'] == true ? 1 : 0;
 
-                    $result_lista_cumparaturi = $reader->getShoppingList($id_lista_cumparaturi);
+    $id_lista_cumparaturi = $reader->getShoppingListId($id_client, $vanzator);
 
-                    if($result_lista_cumparaturi->num_rows != 0 ){
-                        while ($row = $result_lista_cumparaturi->fetch_assoc()) {
-                            $id_produs = $row['id_produs'];
-                            $quantity = "\"" . $row['cantitate'] . "\"";
+    $result_lista_cumparaturi = $reader->getShoppingList($id_lista_cumparaturi);
 
-                            $row = $reader->getProduct($id_produs);
+    if($result_lista_cumparaturi->num_rows != 0 ){
+        while ($row = $result_lista_cumparaturi->fetch_assoc()) {
+            $id_produs = $row['id_produs'];
+            $quantity = "\"" . $row['cantitate'] . "\"";
 
-                            $name = $row['nume'];
-                            $price = $row['pret'];
-                            $arome = $row['arome'];
-                            $img_path = "\"" . "../backend/products/" . $row['path_poza'] . "\"";
-                            $sour = $row['acidulat'] == 1 ? 'acidulat' : 'neacidulat';
-                            ?>
-                            <div class="column">
-                                <div class="item">
-                                    <div class="buttons">
-                                        <a class="delete-btn" href="deleteFromCart.php?id_produs=<?php echo $id_produs?>&id_lista_cumparaturi=<?php echo $id_lista_cumparaturi?>"></a>
-                                        <span class="like-btn"></span>
-                                    </div>
+            $row = $reader->getProduct($id_produs);
 
-                                    <div class="image">
-                                        <img src=<?php echo $img_path ?> alt=""/>
-                                    </div>
+            $name = $row['nume'];
+            $price = $row['pret'];
+            $arome = $row['arome'];
+            $img_path = "\"" . "../backend/products/" . $row['path_poza'] . "\"";
+            $sour = $row['acidulat'] == 1 ? 'acidulat' : 'neacidulat';
 
-                                    <div class="description">
-                                        <span><?php echo $name ?></span>
-                                        <span><?php echo $arome ?></span>
-                                        <span><?php echo $sour ?></span>
-                                    </div>
-
-                                    <div>
-                                        <input type="number" name="quantity" value=<?php echo $quantity ?>>
-                                    </div>
-
-                                    <div class="total-price"><?php echo $price ?> Lei</div>
-                                </div>
-                            </div>
-                            <?php
-                        } ?>
-                            <div class="checkout-btn">
-                                <span><a href="../frontend/checkout.php">Check out</a></span>
-                            </div>
-                        <?php
-                    } else{
-                        echo "YOUR CART IS EMPTY!";
-                    }
-                    $reader->kill();
-                } else{
-                    header("Location: ../frontend/index.php");
-                    die();
-                }
-            ?>
-        </div>
-    </body>
-</html>
-
+            $cartBuilder->buildItem($id_produs, $id_lista_cumparaturi, $img_path, $name, $arome, $sour, $quantity, $price);
+        }
+        $cartBuilder->buildCheckout();
+        $cartBuilder->buildTail();
+    } else{
+        echo "YOUR CART IS EMPTY!";
+    }
+    $reader->kill();
+} else{
+    header("Location: ../frontend/index.php");
+    die();
+}

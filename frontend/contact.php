@@ -1,6 +1,9 @@
 <?php include_once('menu.php');?>
 <!DOCTYPE html>
 <html lang="ro">
+<head>
+    <title>Become a seller!</title>
+</head>
 <form action="../backend/addSeller.php" method="POST">
     <div>
         <h1>Become a seller! </h1>

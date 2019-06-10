@@ -126,6 +126,7 @@ class Reader{
         }
         $row = $result->fetch_assoc();
         $result->close();
+
         return $row['id_lista_cumparaturi'];
     }
 
@@ -141,6 +142,7 @@ class Reader{
         }
         $row = $result->fetch_assoc();
         $result->close();
+
         return $row['cantitate'];
     }
 
@@ -149,6 +151,7 @@ class Reader{
         $row = $result->fetch_assoc();
         $id_lista_cumparaturi = $row['id_lista_cumparaturi'];
         $result->close();
+
         return $id_lista_cumparaturi;
     }
 
@@ -171,6 +174,26 @@ class Reader{
         $result->close();
 
         return $row['cantitate'];
+    }
+
+    public function getUserId($email){
+        $user_id = self::getClientId($email);
+        if($user_id == -1)
+            $user_id = self::getSellerId($email);
+
+        return $user_id;
+    }
+
+    public function getSeller($id_vanzator){
+        $stmt = self::$conn->prepare("SELECT * FROM vanzator WHERE id_vanzator=?");
+        $stmt->bind_param('i', $id_vanzator);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        $row = $result->fetch_assoc();
+        $result->close();
+
+        return $row;
     }
 
     public function kill(){

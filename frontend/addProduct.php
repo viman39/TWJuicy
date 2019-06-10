@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="ro">
 <head>
-    <title>Create Account</title>
+    <title>Add product!</title>
     <link rel="stylesheet" href="../css/addProduct.css">
 </head>
 <body>
@@ -20,7 +20,7 @@
             </div>
 
             <div>
-                <label for="price"><b>Password: </b></label>
+                <label for="price"><b>Price: </b></label>
                 <input type="number" id="price" placeholder="price" name="price" required>
             </div>
 

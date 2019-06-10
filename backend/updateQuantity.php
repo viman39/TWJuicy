@@ -8,8 +8,16 @@
 
 include_once('database/Database.php');
 
-$id_product = $_GET['id_produs'];
-$quantity = $_POST['newQty'];
+$iterator=1;
+$qty = 'newQty'.$iterator;
+
+while($_POST[$qty] == 0){
+    $iterator++;
+    $qty = $qty = 'newQty'.$iterator;
+}
+
+$id_product = $iterator;
+$quantity = $_POST[$qty];
 
 $updater = new Updater();
 $updater->updateProductQuantity($id_product, $quantity);
