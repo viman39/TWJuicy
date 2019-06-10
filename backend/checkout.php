@@ -28,8 +28,6 @@ if($id_user == -1){
     $vanzator = 1;
 }
 
-
-
 $id_lista_cumparaturi = $reader->getShoppingListId($id_user, $vanzator);
 
 $checkout = new CheckoutBuilder();

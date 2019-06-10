@@ -23,14 +23,15 @@ $updater = new Updater();
 
 $message = "Comanda finalizata pentru $fullName la adresa $fullAddress in $country, $city. \nSucuri cumparate: \n";
 
-$id_user = $reader->getClientId($email);
+$id_user = $reader->getClientId($_SESSION['username']);
+$vanzator = 0;
+
 if($id_user == -1){
     $id_user = $reader->getSellerId($email);
     $vanzator = 1;
 }
 
 $id_lista_cumparaturi = $reader->getShoppingListId($id_user, $vanzator);
-
 $lista_cumparatrui = $reader->getShoppingList($id_lista_cumparaturi);
 
 while($row = $lista_cumparatrui->fetch_assoc()){
@@ -57,4 +58,8 @@ $message = $message . "Comanda va ajunge in cel mai scurt timp posibil.\n Va ura
 $emailer->purchaseConfirmation($email, $message);
 
 $updater->updatePlateste_pentruFinalizare($id_lista_cumparaturi);
+
+header("Location: ../frontend/index.php");
+die();
+
 
