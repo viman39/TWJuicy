@@ -1,6 +1,8 @@
 .column {
     float: left;
     width: 50%;
+    padding-top:2%;
+    padding-left: 5%;
 }
 
 .row:after {
@@ -14,4 +16,27 @@
     .column {
         width: 100%;
     }
+}
+
+.shoppingList{
+    padding-left: 30%;
+    padding-top: 3%;
+}
+
+.checkoutBtnDiv{
+    padding-left: 35%;
+}
+
+.checkoutBtn{
+    background: blue;
+    color: white;
+    padding: 2%;
+}
+
+input{
+    margin-top: 2%;
+    text-decoration: none;
+    width: auto;
+    padding: 3px;
+    border-radius: 15px;
 }

@@ -36,6 +36,14 @@ class Email{
         self::delete();
     }
 
+    public function newClient($email, $name){
+        self::setSubject("Bine ai venit pe Juicy!");
+        self::setMessage("Buna $name!\nBine ai venit pe platforma noastra!");
+        self::setHeaders();
+        self::sent($email);
+        self::delete();
+    }
+
     private function setSubject($subject){
         self::$subject = $subject;
     }

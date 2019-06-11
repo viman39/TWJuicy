@@ -7,6 +7,7 @@
  */
 
 include_once('database\Database.php');
+include_once('mail_config\Email.php');
 session_start();
 
 $errors = array(
@@ -52,6 +53,9 @@ if(isset($_POST['emailAddress']) and !empty($_POST['emailAddress'])){
                                             $creator = new Creator();
 
                                             $check = $creator->insertNewClient($address, $email, $name, $surname, $password);
+                                            $emailer = new Email();
+
+                                            $emailer->newClient($name,$email);
 
                                             if (!$check) {
                                                 echo 'Database error!';

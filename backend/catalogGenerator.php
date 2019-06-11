@@ -15,10 +15,17 @@ if($_SESSION['login'] == false) {
     die();
 }
 
-$reader = new Reader();
-$catalogBuilder = new CatalogBuilder();
+$search = "";
 
-$result_produse = $reader->getProducts();
+if(isset($_GET['searchBar'])){
+    $search = $_GET['searchBar'];
+}
+
+$reader = new Reader();
+
+$catalogBuilder = new CatalogBuilder($search);
+
+$result_produse = $reader->getCustomProducts($search);
 
     while($row = $result_produse->fetch_assoc()){
         $path = "\"" . "../backend/products/" . $row['path_poza'] . "\"";

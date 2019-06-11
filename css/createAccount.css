@@ -1,7 +1,23 @@
+
+.mainBody{
+    background-color: whitesmoke;
+    align-items: center;
+}
+
+.formular {
+    align-items: center;
+}
+
+.logo{
+    width: 16%;
+    margin-left: 42%;
+    margin-right: 42%;
+}
+
 input[type=text], input[type=password] {
     position: relative;
-    width: 50%;
-    padding: 12px 20px;
+    width: 30%;
+    padding-top: 20%;
     margin: 8px 0;
     display: inline-block;
     border: 1px solid #ccc;
@@ -11,7 +27,7 @@ input[type=text], input[type=password] {
 .signUpButton{
     background-color: rgb(15, 47, 189);
     color: white;
-    padding: 14px 20px;
+    padding-top: 10%;
     margin: 8px 0;
     border: none;
     cursor: pointer;
@@ -26,4 +42,8 @@ input[type=text], input[type=password] {
     border: none;
     cursor: pointer;
     width: auto;
+}
+
+.buttons{
+    margin-left: 5%;
 }

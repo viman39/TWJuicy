@@ -16,19 +16,19 @@
                 </div>
 
                 <div class="formular">
-                    <label for="email"><b>Username: </b></label>
+                    <label for="email"><strong>Username: </strong></label>
                     <input type="text" placeholder="Enter Email" name="email" required>
                 </div>
                 <div>
-                    <label for="password"><b>Password: </b></label>
+                    <label for="password"><strong>Password: </strong></label>
                     <input type="password" placeholder="Enter Password" name="passd" required>
                 </div>
                 <div>
                     <button type="submit" formaction="../backend/login.php" formmethod="POST">Login</button>
+                    <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelButton">Cancel</button>
                 </div>
                 
                 <div class="container" style="background-color: #f1f1f1">
-                    <div><button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelButton">Cancel</button></div>
                     <div><a type="button" href="createAccount.php">Create Account</a></div>
                 </div>
             </form>

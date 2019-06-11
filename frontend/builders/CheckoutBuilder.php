@@ -40,13 +40,13 @@ class CheckoutBuilder{
         ?>
                 <div class="column">
                     <label for="fullName">Full Name</label>
-                    <input type="text" id="fullName" name="fullName" required>
+                    <input type="text" id="fullName" name="fullName" required><br/>
                     <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required>
+                    <input type="email" id="email" name="email" required><br/>
                     <label for="fullAddress">Full Address</label>
-                    <input type="text" id="fullAddress" name="fullAddress" required>
+                    <input type="text" id="fullAddress" name="fullAddress" required><br/>
                     <label for="city">City</label>
-                    <input type="text" id="city" name="city" required>
+                    <input type="text" id="city" name="city" required><br/>
 
                     <div class="row">
                         <div class="column">
@@ -66,13 +66,13 @@ class CheckoutBuilder{
         ?>
                 <div class="column">
                     <label for="fullNameOnCard">Full name on card</label>
-                    <input type="text" id="fullNameOnCard" name="fullNameOnCard" required>
+                    <input type="text" id="fullNameOnCard" name="fullNameOnCard" required><br/>
                     <label for="creditCardNumber">Credit card Number</label>
-                    <input type="text" id="creditCardNumber" name="creditCardNumber" required>
+                    <input type="text" id="creditCardNumber" name="creditCardNumber" required><br/>
                     <label for="expMonth">Exp Month</label>
-                    <input type="text" min="01" max="12" id="expMonth" name="expMonth" required>
+                    <input type="text" min="01" max="12" id="expMonth" name="expMonth" required><br/>
                     <label for="expYear">Exp Year</label>
-                    <input type="text" id="expYear" name="expYear" required>
+                    <input type="text" id="expYear" name="expYear" required><br/>
                 </div>
 <?php
     }
@@ -80,7 +80,7 @@ class CheckoutBuilder{
     public function startBuildTotal(){
         ?>
             </div>
-            <div>
+            <div class="shoppingList">
                 <table style="width = 100%">
                     <tr>
                         <th>Nume produs</th>
@@ -107,7 +107,7 @@ class CheckoutBuilder{
                 </table>
             <h3>Total: <?php echo $total ?></h3>
             </div>
-            <input type="submit" value="Finish Order" />
+            <div class="checkoutBtnDiv"><input class="checkoutBtn" type="submit" value="Finish Order"/></div>
 <?php
     }
 

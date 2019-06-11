@@ -8,13 +8,13 @@
   float: left;
   width: 25%;
   height: 650px;
-  padding: 10px 0px 0px 0px;
-  margin: 10px 0px 10px 0px;
+  padding: 10px ;
+  margin: 10px ;
 }
 
 .row{
   margin: 0 -5px;
-  padding: 0px 0px 0px 0px;
+
 }
 
 .row:after {
@@ -36,7 +36,6 @@
   max-width: 300px;
   margin: auto;
   text-align: center;
-  font-family: arial;
   border: 1px solid red;
   border-radius: 5px;
   background-color: #f1f1f1;
@@ -49,7 +48,6 @@
 
 .button1 {
 border-bottom: 1px solid red;
-padding: 0px;
 }
 
 .button1:hover{
@@ -74,3 +72,25 @@ padding: 0px;
   background-color: red;
   color: white;
 }
+
+.searchBarForm{
+  padding:2%
+}
+
+.searchBarInput{
+  border: 1px solid black;
+  border-radius:15px;
+}
+
+.searchButton{
+  border-radius: 15px
+}
+
+.adaugaInCosA{
+  text-decoration: none;
+  color: white;
+  width: auto;
+  background: blue;
+  padding: 3px;
+}
+

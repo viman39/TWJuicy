@@ -10,16 +10,16 @@ class CatalogBuilder{
     public static $head = 0;
     public static $tail = 0;
 
-    public function __construct(){
+    public function __construct($search){
         if( self::$head == 0 ){
-            self::buildHead();
+            self::buildHead($search);
             self::$head = 1;
             return true;
         }
         return false;
     }
 
-    private function buildHead(){
+    private function buildHead($search){
         ?>
         <!DOCTYPE html>
         <html lang="ro">
@@ -31,7 +31,10 @@ class CatalogBuilder{
         </head>
         <body>
         <header>
-            <h1>Catalog sucuri</h1>
+            <form action="../backend/catalogGenerator.php<?php if($search !== "") echo "?searchBar=$search"?>" method="get" class="searchBarForm" style="padding: 2%">
+                <input type="text" placeholder="search" name="searchBar" class="searchBarInput" style="border: 1px solid black; border-radius:15px;">
+                <input type="submit" value="Search!" class="searchButton" style="border-radius: 15px;">
+            </form>
         </header>
         <div class="container">
         <div class="row">
@@ -54,7 +57,7 @@ class CatalogBuilder{
                 ?>
                 <p><?php echo $arome ?></p>
                 <?php if($sold_out == false) {
-                    ?> <p><a class="btn btn-primary" href=<?php echo $adauga_in_cos?>>Adauga in cos</a></p> <?php
+                    ?> <p><a class="adaugaInCosA" style="text-decoration: none; background: blue; border-radius: 15px; color:white; padding: 2%" href=<?php echo $adauga_in_cos?>>Adauga in cos</a></p> <?php
                 } ?>
             </div>
         </div>

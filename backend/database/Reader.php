@@ -196,6 +196,21 @@ class Reader{
         return $row;
     }
 
+    public function getCustomProducts($search){
+        if($search == ""){
+            return self::getProducts();
+        }
+        $search = "%$search%";
+        $sql = "SELECT * FROM produse WHERE nume LIKE ? OR arome LIKE ?;";
+        $stmt = self::$conn->prepare($sql);
+        $stmt->bind_param('ss', $search, $search);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+
+        return $result;
+    }
+
     public function kill(){
         self::$conn->close();
     }

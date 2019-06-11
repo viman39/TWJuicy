@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Raport</title>
+    <link rel="stylesheet" href="css/scholarly.min.css">
+</head>
+<body>
+<div>
+    <header><div class="banner">
+        <img src="scholarly-html.svg" width="227" height="50" alt="Scholarly HTML logo">
+
+        <div class="status">Community Draft</div>
+    </div>
+        <h1>Raport Juicy</h1>
+    <h5>Author: Gheoca Victor-Manuel Anul II, Grupa B2</h5></header>
+</div>
+<div class ="cuprins">
+    <ol>
+        <li><a href="#Introducere">Introducere</a></li>
+        <li><a href="#Structura">Structura</a></li>
+        <li><a href="#Etape">Etapele Dezvoltarii Proiectului</a></li>
+        <li><a href="#Tehnologii">Tehnologii utilizate</a></li>
+        <li><a href="#Baza">Baza de date</a></li>
+        <li><a href="#Servicii">Servicii utilizate</a></li>
+    </ol>
+</div>
+
+<div id="Introducere" class="section">
+    <header><h3>Introducere</h3></header>
+    <div>
+        <ul>
+            Juicy este o aplicatie web care pune la dispozitia utilizatorilor interpretarea a doua roluri:
+            <li>Vanzator</li>
+            <li>Cumparator</li>
+        </ul>
+    </div>
+    <div>
+        Vanzatorul:
+        <ul>
+            <li>adauga produse noi care pot fi cumparate</li>
+            <li>vizualizeaza evolutia vanzarilor si a stocului in timp real</li>
+            <li>sterge produsele pe care nu le mai vinde</li>
+        </ul>
+    </div>
+    <div>
+        Cumparatorul:
+        <ul>
+            <li>creeaza liste de cumparaturi</li>
+            <li>controleaza lista de cumparaturri cat si cantitatea cumparata</li>
+            <li>finalizeaza comenzi</li>
+        </ul>
+    </div>
+    <div>
+        Alte intrebuintari ale site-ului:
+        <ul>
+            <li>trimite email de confiramre
+            <ul>
+                <li>cand o persoana noua isi face cont(vanzator/cumparator)</li>
+                <li>cand un produs este vandut(vanzatorului)</li>
+                <li>cand o camanda este finalizata(cumparatorului)</li>
+            </ul></li>
+            <li>adaugarea produselor direct din shop</li>
+        </ul>
+    </div>
+</div>
+
+<div id="Structura" class="section">
+    <header><h3>Structura</h3></header>
+    <div>
+        Pagina principala.
+        Cuprinde un meniu cu 3 butoane:
+        <ul>
+            <li>Home: butonul de acasa cu informatii despre site</li>
+            <li>Contact: care redirectioneaza la un chestionar pentru a deveni vanzator</li>
+            <li>Login: care deschide o fereastra cu un formular pentru logare
+            <ul>
+                <li>care poate duce mai departe la crearea unui cont de cumparator</li>
+            </ul></li>
+        </ul>
+        Odata logat sunt doua flow-uri.
+        <ul>
+            <li>In cazul in care este un client apar butoanele
+            <ul>
+                <li>Shop: care prezinta produsele</li>
+                <li>Shopping history: neimplementat inca</li>
+                <li>Logout: pentru terminarea sesiunii de cumparaturi</li>
+                <li>Cart: pentru vizualizarea liste de cumparaturi
+                <ul>
+                    <li>care mai departe duce la finalizarea comenzii prin butonul de checkout</li>
+                </ul></li>
+            </ul></li>
+            <li>In cazul in care este un vanzator apar butoanele
+            <ul>
+                <li>Shop: care prezinta produsele</li>
+                <li>Produsele tale: care prezinta produsele pe care le detii tu ca vanzator
+                <ul>
+                    <li>care mai departe poate duce la Adauga produs pentru a adauga produse noi</li>
+                </ul></li>
+                <li>Logout: pentru terminarea sesiunii de cumparaturi</li>
+                <li>Cart: pentru vizualizarea liste de cumparaturi<ul>
+                    <li>care mai departe duce la finalizarea comenzii prin butonul de checkout</li>
+                </ul></li>
+            </ul></li>
+        </ul>
+        <img src="../diagrame/usecase.png" alt="usecase">
+    </div>
+</div>
+
+<div id="Etape" class="section">
+    <header><h3>Etapele dezvoltarii proiectului</h3></header>
+    <ol>
+        <li>Alegerea proiectului</li>
+        <li>Crearea paginilor orientative pentru front-end(html+css)</li>
+        <li>Realizarea arhitecturii(diagrame UML, UseCase, diagrame E/R</li>
+        <li>Realizarea tabelelor in baza de date si configurarea acesteia</li>
+        <li>Implementarea functionalitatilor in PHP</li>
+        <li>Testare</li>
+        <li>Fixarea bugurilor</li>
+        <li>Finalizare</li>
+    </ol>
+</div>
+
+<div id="Tehnologii" class="section">
+    <header><h3>Tehnologii utilizate</h3></header>
+    <div>
+        <strong>HTML5</strong>(HyperText Markup Language), o tehnologie nucleu pentru internet, propusa intial pentru browser-ul Opera, <br/>este un limbaj pentru structurarea si prezentarea continutului WWW(World Wide Web) <br />
+        <strong>CSS</strong>(Cascading Style Sheets), este un standard pentru formatarea elementelor unui document HTML. <br />
+        <strong>PHP</strong>(Php: Hypertext Preprocessor), este un limbaj de programare folosit initial pentru a produce pagini web dinamice, <br/>este folosit in scara larga in dezvoltarea paginilor si aplicatiilor web. <br />
+        <strong>MySQLi</strong> este un sistem de gestiune a bazelor de date relaționale.
+    </div>
+</div>
+
+<div id="Baza" class="section">
+    <header><h3>Baza de date</h3></header>
+    Baza de date este alcatuita din 7 tabele bine structurate care permit usoara gestionare a informatiilor cat si adaugarea de coloane/tabele noi cu usurinta.
+    <ul>
+        <li>clienti: id_client, adresa, email, nume, prenume, parola(incriptata md5)</li>
+        <li>vanzator: id_vanzator, email, parola(incriptata md5)</li>
+        <li>produse: id_produs, id_vanzator, nume, pret, acidulat, arome, path_poza(calea catre poza din shop), nou(indice care spune daca e adaugat in ultima luna), data_adaugarii</li>
+        <li>detine: id_vanzator, id_produs, cantitate</li>
+        <li>lista_cumparaturi: id_lista_cumparaturi</li>
+        <li>plateste_pentru: id_client, id_lista_cumparaturi, finalizare, vanzator(coloana care ne spune daca lista e realizata de pe contul unui vanzator)</li>
+        <li>cantitate_cumparata: id_lista_cumparaturi, id_produs, cantitate</li>
+    </ul>
+    <img src="../diagrame/erdplus-diagram%20(5).png" alt="ERDiagram" style="width: 60%">
+</div>
+
+<div id="Servicii" class="section">
+    <header><h3>Servicii uitlizate</h3></header>
+    <div>
+        <strong>GitHub</strong> pentru gestionarea versiunilor programului. <br />
+        <strong>Gmail</strong> pentru a trimite email-urile. Adresa folosita: juicyprojectb2@gmail.com
+    </div>
+</div>
+</body>
+</html>

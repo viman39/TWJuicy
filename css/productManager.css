@@ -12,18 +12,13 @@
     }
 }
 
+body{
+    background-color: white;
+}
+
 .Pret {
     color: grey;
     font-size: 25px;
-}
-
-.button1 {
-    border-bottom: 1px solid red;
-    padding: 0px;
-}
-
-.button1:hover{
-    filter: saturate(500%);
 }
 
 .delete-btn {
@@ -58,4 +53,40 @@ ul#horizontal-list {
 }
 ul#horizontal-list li {
     display: inline;
+}
+
+.inputBox{
+    border: 1px solid black;
+    border-radius:15px;
+}
+
+.deleteItem{
+    font-weight: bold;
+    text-decoration: none;
+    color: black;
+    width: auto;
+    padding: 10px 18px;
+    margin-right: 1px;
+}
+
+tr{
+    position: relative;
+}
+
+.adaugaProdusBtn{
+    text-decoration: none;
+    color: white;
+    width: auto;
+    background: blue;
+    padding: 3px;
+    border-radius: 15px;
+}
+
+.adaugaProdusDiv{
+    padding-top:3%;
+    padding-left:39%;
+}
+
+.tableRow{
+    margin-top: 10%;
 }

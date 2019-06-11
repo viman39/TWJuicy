@@ -25,7 +25,7 @@ class productManagerBuilder{
         <html lang="ro">
         <head>
             <meta charset="utf-8">
-            <link rel="stylesheet" type="text/css" href="../../css/productManager.css">
+            <link rel="stylesheet" type="text/css" href="../css/productManager.css">
             <title>Your Products</title>
             <meta name="viewport" content="width=device-width, initial-scale=1">
         </head>
@@ -47,15 +47,15 @@ class productManagerBuilder{
     public function buildItem($nume, $pret, $acidulat, $arome, $quantity, $id_produs){
         $acidulat = $acidulat == 1 ? "DA" : "NU";
         ?>
-                <tr>
-                    <td><a class="delete-btn" href="../backend/deleteProduct.php?id_produs=<?php  echo $id_produs?>"></a></td>
-                    <td><?php  echo $nume?></td>
-                    <td><?php  echo $pret?></td>
-                    <td><?php  echo $acidulat?></td>
-                    <td><?php  echo $arome?></td>
-                    <td><?php  echo $quantity?></td>
-                    <td><form action="../backend/updateQuantity.php" method="post">
-                            <input type="number" name="newQty<?php  echo $id_produs?>" min="1">
+                <tr class="tableRow">
+                    <td align="right"><a class="deleteItem" href="../backend/deleteProduct.php?id_produs=<?php  echo $id_produs?>">elimina produs!</a></td>
+                    <td align="center"><?php  echo $nume?></td>
+                    <td align="center"><?php  echo $pret?></td>
+                    <td align="center"><?php  echo $acidulat?></td>
+                    <td align="center"><?php  echo $arome?></td>
+                    <td align="center"><?php  echo $quantity?></td>
+                    <td align="center"><form action="../backend/updateQuantity.php" method="post">
+                            <input type="number" class="inputBox" name="newQty<?php  echo $id_produs?>" min="1">
                             <input type="submit" value="Add" name="submit<?php  echo $id_produs?>"><form></td>
                 </tr>
 <?php
@@ -64,11 +64,10 @@ class productManagerBuilder{
     public function buildTail(){
         if(self::$tail == 1) return false;
         ?>
-                    <tr class="row">
-                        <td><a class="btn btn-primary" href="../frontend/addProduct.php">Adauga produs</a></td>
-                    </tr>
-
             </table>
+            <div class="adaugaProdusDiv">
+                <a class="adaugaProdusBtn" href="../frontend/addProduct.php">Adauga produs</a>
+            </div>
         </body>
         </html>
 <?php

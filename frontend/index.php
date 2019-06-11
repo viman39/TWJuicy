@@ -1,19 +1,17 @@
 <?php include_once('menu.php');
-      include_once('../backend/addSeller.php');
-      session_start();
       ?>
 <!DOCTYPE html>
 <html lang="ro">
-
 <head>
     <meta charset="utf-8">
     <title>Juicy</title>
     <link rel="stylesheet" href="../css/main.css"> 
-    <link rel="stylesheet" href="../css/login.css">
 </head>
 
 <body>
-    <h1>Juicy</h1>
+    <header>
+        <img src="../img/logo.png" alt="logo" class="logo">
+    </header>
 
     <h2>Welcome !</h2>
     <p id="p1">Using our web service you can preview drinks that are available for purchase.</p>

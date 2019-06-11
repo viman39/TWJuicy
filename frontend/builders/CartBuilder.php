@@ -26,14 +26,15 @@ class CartBuilder{
         <head>
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width">
+            <link rel="stylesheet" type="text/css" href="../../css/cart.css">
             <title>Cart</title>
         </head>
         <body>
         <header>
-            <h1 class="main_title">Juicy</h1>
+            <img src="../img/logo.png" alt="logo" class="logo" style="width: 16%; margin-left: 42%; margin-right: 42%;">
         </header>
 
-        <form class="cart" action="../backend/checkout.php" method="post">
+        <form class="cart" action="../backend/checkout.php" method="post" style="width: auto; height: auto">
             <table style="width:100%">
                 <tr>
                     <th></th>
