@@ -5,11 +5,11 @@
         <title>Create Account</title>
         <link rel="stylesheet" href="../css/createAccount.css">
     </head>
-    <body class="mainBody">
+    <body class="mainBody" style="background-image: linear-gradient(-45deg, yellow, lightyellow)">
 
-        <img src="../img/logo.png" alt="logo" id="logo" class="logo">
+        <img src="../img/logo.png" alt="logo" id="logo" class="logo" style="width:15%; padding-left:36%;">
 
-        <form action="createAccount.php" method="POST">
+        <form action="createAccount.php" method="POST" style="padding-left:15%">
             <div class="formular">
                 <div>
                     <label for="email"><strong>Email: </strong></label>

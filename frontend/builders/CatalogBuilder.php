@@ -29,7 +29,7 @@ class CatalogBuilder{
             <title>Juicy</title>
             <meta name="viewport" content="width=device-width, initial-scale=1">
         </head>
-        <body>
+        <body style="background-image: linear-gradient(-45deg, yellow, lightyellow)">
         <header>
             <form action="../backend/catalogGenerator.php<?php if($search !== "") echo "?searchBar=$search"?>" method="get" class="searchBarForm" style="padding: 2%">
                 <input type="text" placeholder="search" name="searchBar" class="searchBarInput" style="border: 1px solid black; border-radius:15px;">

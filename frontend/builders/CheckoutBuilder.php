@@ -29,7 +29,7 @@ class CheckoutBuilder{
             <link rel="stylesheet" type="text/css" href="../css/checkout.css">
             <title>Checkout</title>
         </head>
-        <body>
+        <body style="background-image: linear-gradient(-45deg, yellow, lightyellow)">
 
         <form action="../backend/finishOrder.php" method="post" name="checkout">
             <div class="row">

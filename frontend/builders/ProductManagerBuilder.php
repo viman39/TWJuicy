@@ -29,7 +29,7 @@ class productManagerBuilder{
             <title>Your Products</title>
             <meta name="viewport" content="width=device-width, initial-scale=1">
         </head>
-        <body>
+        <body style="background-image: linear-gradient(-45deg, yellow, lightyellow)">
             <table style="width:90%">
                 <tr>
                     <th></th>

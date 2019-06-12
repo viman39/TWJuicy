@@ -1,6 +1,6 @@
 <?php include_once('login.php');
     ?>
-<nav>
+<nav class="mainBarNav">
     <ul id="menu">
         <li><a href="../frontend/index.php">Acasa</a></li>
         <?php if(isset($_SESSION['login']) and $_SESSION['login'] == true){     ?>

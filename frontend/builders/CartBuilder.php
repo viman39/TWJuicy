@@ -29,7 +29,7 @@ class CartBuilder{
             <link rel="stylesheet" type="text/css" href="../../css/cart.css">
             <title>Cart</title>
         </head>
-        <body>
+        <body style="background-image: linear-gradient(-45deg, yellow, lightyellow)">
         <header>
             <img src="../img/logo.png" alt="logo" class="logo" style="width: 16%; margin-left: 42%; margin-right: 42%;">
         </header>

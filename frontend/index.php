@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../css/main.css"> 
 </head>
 
-<body>
+<body style="background-image: linear-gradient(-45deg, yellow, lightyellow)">
     <header>
         <img src="../img/logo.png" alt="logo" class="logo">
     </header>

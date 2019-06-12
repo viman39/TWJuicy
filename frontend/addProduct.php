@@ -5,7 +5,7 @@
     <title>Add product!</title>
     <link rel="stylesheet" href="../css/addProduct.css">
 </head>
-<body>
+<body style="background-image: linear-gradient(-45deg, yellow, lightyellow)">
 <h1>addProduct</h1>
     <form action="../backend/addProduct.php" method="POST" enctype="multipart/form-data">
         <div class="formular">

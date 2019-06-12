@@ -41,6 +41,10 @@ ul#menu {
     color: black ; 
 }
 
+.mainBarNav{
+    padding-top:10%;
+}
+
 
 @media screen and (min-width: 840px) {
     ul#menu {
