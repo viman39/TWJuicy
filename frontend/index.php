@@ -13,9 +13,9 @@
         <img src="../img/logo.png" alt="logo" class="logo">
     </header>
 
-    <h2>Welcome !</h2>
-    <p id="p1">Using our web service you can preview drinks that are available for purchase.</p>
-    <p id="p2">We also provide information regarding the respective drinks, such as price, the energy value, ingredients. </p>
+    <h2>Bine ai venit! !</h2>
+    <p id="p1">Folosind serviciile noastre web puteti vizualiza bauturi care sunt destinate vanzarii.</p>
+    <p id="p2">De asemenea oferim posibilitatea comerciantilor de a-si vinde propriile produse precum si monitorizarea acestora.</p>
 
     <footer>Project by UAIC Students</footer>
 

@@ -55,7 +55,9 @@ class productManagerBuilder{
                     <td align="center"><?php  echo $arome?></td>
                     <td align="center"><?php  echo $quantity?></td>
                     <td align="center"><form action="../backend/updateQuantity.php" method="post">
-                            <input type="number" class="inputBox" name="newQty<?php  echo $id_produs?>" min="1">
+                            <label>
+                                <input type="number" class="inputBox" name="newQty<?php  echo $id_produs?>" min="1">
+                            </label>
                             <input type="submit" value="Add" name="submit<?php  echo $id_produs?>"><form></td>
                 </tr>
 <?php

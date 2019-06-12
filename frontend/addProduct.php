@@ -6,9 +6,9 @@
     <link rel="stylesheet" href="../css/addProduct.css">
 </head>
 <body style="background-image: linear-gradient(-45deg, yellow, lightyellow)">
-<h1>addProduct</h1>
-    <form action="../backend/addProduct.php" method="POST" enctype="multipart/form-data">
-        <div class="formular">
+    <form action="../backend/addProduct.php" method="POST" enctype="multipart/form-data" style="padding-left:40%;">
+        <img src="../img/logo.png" alt="logo" style="width: 15%">
+        <div class="formular"">
             <div>
                 <label for="productName"><b>Juice name: </b></label>
                 <input type="text" id="productName" placeholder="product name" name="productName" required>

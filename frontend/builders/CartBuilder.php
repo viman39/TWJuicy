@@ -49,7 +49,7 @@ class CartBuilder{
         ?>
                 <tr>
                     <td><a class="delete-btn" href="deleteFromCart.php?id_produs=<?php echo $id_produs?>&id_lista_cumparaturi=<?php echo $id_lista_cumparaturi?>">x</a></td>
-                    <td><img style="width: 7%" src=<?php echo $img_path ?> ></td>
+                    <td><img style="width: 7%" alt="image" src=<?php echo $img_path ?>></td>
                     <td>
                         <div class="description">
                             <h3><?php echo $name ?></h3>
@@ -59,7 +59,9 @@ class CartBuilder{
                     </td>
                     <td>
                         <span>quantity: </span>
-                        <input type="number" name="quantity<?php echo $id_produs?>" value=<?php echo $quantity ?>>
+                        <label>
+                            <input type="number" name="quantity<?php echo $id_produs?>" value=<?php echo $quantity ?> />
+                        </label>
                     </td>
                 </tr>
 <?php

@@ -1,9 +1,10 @@
 <?php include_once('../backend/login.php');
     ?>
 <!DOCTYPE html>
-<html>
+<html lang="ro">
     <head>
         <link rel="stylesheet" href="../css/login.css">
+        <title>Login</title>
     </head>
     <body>
 
